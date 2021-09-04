@@ -659,7 +659,7 @@ int iet_action::get_all_selected_gpus(void) {
 
         /* Check if GPU is die in MCM GPU */
         mcm_die =  gpu_check_if_mcm_die(devId);
-	if (true == mcm_die) {
+	if (mcm_die) {
 
 		msg_stream.str("");
                 msg_stream << "GPU ID : " << std::setw(5) << gpu_id << " - " << "Device : " << std::setw(5) << devId <<
@@ -671,7 +671,7 @@ int iet_action::get_all_selected_gpus(void) {
     }
 
     /* AMD MCM GPU/s was found in the system */
-    if (true == amd_mcm_gpu_found) {
+    if (amd_mcm_gpu_found) {
 
 	    msg_stream.str("");
 	    msg_stream << "Note: The system has Multi-Chip Module (MCM) GPU/s." << "\n" 

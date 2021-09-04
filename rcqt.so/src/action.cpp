@@ -151,13 +151,13 @@ int rcqt_action::run() {
 
   // check if package check action is going to trigger
   pkgchk_bool =  rvs::actionbase::has_property(PACKAGE);
-  if (pkgchk_bool == true)
+  if (pkgchk_bool)
     return pkgchk_run();
 
   // check if usrer check action is going to trigger
   usrchk_bool = rvs::actionbase::has_property(USER);
 
-  if (usrchk_bool == true)
+  if (usrchk_bool)
     return usrchk_run();
 
   // chck if kernel version action is going to trigger
@@ -175,7 +175,7 @@ int rcqt_action::run() {
   // check if file check action is going to trigger
   filechk_bool = rvs::actionbase::has_property(FILE);
 
-  if (filechk_bool == true)
+  if (filechk_bool)
     return filechk_run();
 
   return -1;
@@ -228,7 +228,7 @@ int rcqt_action::pkgchk_run() {
 
     line_result.erase(line_result.find_last_not_of(" \n\r\t")+1);
     #endif
-    if (regex_match(line_result, pkg_pattern) == true) {
+    if (regex_match(line_result, pkg_pattern)) {
       if (bjson) {
         if (json_rcqt_node != NULL) {
           json_child_node = rvs::lp::CreateNode(json_rcqt_node
@@ -271,7 +271,7 @@ int rcqt_action::pkgchk_run() {
           rvs::lp::AddString(json_child_node, "group"
           , group_line_result.c_str());
         }
-        if (regex_match(group_line_result, version_pattern) == true) {
+        if (regex_match(group_line_result, version_pattern)) {
           string package_exists = "[" + action_name + "] "
           + "rcqt pkgcheck "
           + line_result + " true ";
@@ -305,7 +305,7 @@ int rcqt_action::pkgchk_run() {
   }
   string rm_command_string = std::string("rm ")
   + std::string(PKG_CMD_FILE) +
-  (version_exists == true ? " " + std::string(VERSION_FILE) : "");
+  (version_exists ? " " + std::string(VERSION_FILE) : "");
   // We execute rm command
   if (system(rm_command_string.c_str()) == -1) {
     rvs::lp::Err("system() error", MODULE_NAME_CAPS, action_name);
@@ -346,7 +346,7 @@ int rcqt_action::usrchk_run() {
       if (std::regex_search(line.begin(), line.end()
         , match, get_user_pattern)) {
         string result = match[1];
-        if (regex_match(result, usr_pattern) == true) {
+        if (regex_match(result, usr_pattern)) {
           users_vector.push_back(result);
           string user_exists = "[" + action_name + "] " + "rcqt usercheck "
           + result + " true";
@@ -494,12 +494,12 @@ int rcqt_action::kernelchk_run() {
           for (os_iter = os_version_vector.begin()
             ; os_iter != os_version_vector.end(); os_iter++) {
             std::regex os_pattern(*os_iter);
-          if (regex_match(os_actual, os_pattern) == true) {
+          if (regex_match(os_actual, os_pattern)) {
             os_version_correct = true;
             break;
           }
             }
-            if (os_version_correct == true)
+            if (os_version_correct)
               break;
         }
       }
@@ -799,7 +799,7 @@ int rcqt_action::filechk_run() {
       , "exists", file);
     }
   }
-  if (exists == true && found_files_vector.empty()) {
+  if (exists && found_files_vector.empty()) {
     msg = "[" + action_name + "] " + "rcqt filecheck exists false";
     rvs::lp::Log(msg, rvs::logresults);
   }

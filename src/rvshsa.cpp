@@ -848,7 +848,7 @@ int rvs::hsa::SendTraffic(uint32_t SrcNode, uint32_t DstNode,
   hsa_signal_wait_acquire(signal_fwd, HSA_SIGNAL_CONDITION_LT, 1, uint64_t(-1), HSA_WAIT_STATE_ACTIVE);
 
   // if bidirectional, also wait for reverse transfer to complete
-  if (bidirectional == true) {
+  if (bidirectional) {
     RVSHSATRACE_
     hsa_signal_wait_acquire(signal_rev, HSA_SIGNAL_CONDITION_LT, 1, uint64_t(-1), HSA_WAIT_STATE_ACTIVE);
   }

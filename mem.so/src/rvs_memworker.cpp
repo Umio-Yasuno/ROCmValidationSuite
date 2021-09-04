@@ -217,7 +217,7 @@ void MemWorker::run() {
 
          unsigned int alloc_size =  tot_num_blocks* BLOCKSIZE;
 
-         if(useMappedMemory == true) {
+         if(useMappedMemory) {
 
            msg = "[" + action_name + "] " + MODULE_NAME + " " +
                              std::to_string(gpu_id) + " " + "Memory to be allocated: " + std::to_string(alloc_size); 

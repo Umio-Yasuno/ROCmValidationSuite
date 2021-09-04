@@ -204,7 +204,7 @@ bool pqt_action::get_all_pqt_config_keys(void) {
 
   property_get_bidirectional(&error);
   if (error) {
-    if (prop_test_bandwidth == true) {
+    if (prop_test_bandwidth) {
       msg = "invalid 'bidirectional'";
       rvs::lp::Err(msg, MODULE_NAME_CAPS, action_name);
       res = false;
