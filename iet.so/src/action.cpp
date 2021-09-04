@@ -691,7 +691,7 @@ int iet_action::get_all_selected_gpus(void) {
         else 
             iet_res = -1;
     } else {
-          msg = "No devices match criteria from the test configuation.";
+          msg = "No devices match criteria from the test configuration.";
           rvs::lp::Err(msg, MODULE_NAME_CAPS, action_name);
           iet_res = 1;
     }
